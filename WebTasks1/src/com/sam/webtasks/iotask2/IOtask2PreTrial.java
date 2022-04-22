@@ -46,74 +46,28 @@ public class IOtask2PreTrial {
 		int points = IOtask2BlockContext.currentTargetValue();
 
 		if (points == 0) {
-			displayString = displayString + "This time you must do the task <b>without</b> setting any reminders.<br><br>";
-			
-			if (IOtask2BlockContext.getRewardFrame() == Names.GAIN_FRAME) {
-				displayString = displayString + "You will gain " + IOtask2BlockContext.maxPoints() 
-				+ " points for every special circle that you remember.";
-			} else {
-				displayString = displayString + "You will lose " + IOtask2BlockContext.maxPoints()
-				+ " points for every special circle that you forget.";
-			}
-			
-			displayString = displayString + "<br><br>Please click the button below to start.";
+			displayString = displayString + "This time you must do the task without setting any reminders.<br><br>"
+					+ "Please touch the button below to start.";
 		} else if (points == IOtask2BlockContext.maxPoints()) {
-			displayString = displayString + "This time you <b>must</b> set a reminder for every special circle.<br><br>";
-					
-			if (IOtask2BlockContext.getRewardFrame() == Names.GAIN_FRAME) {
-				displayString = displayString + "You will gain " + IOtask2BlockContext.maxPoints() 
-				+ " points for every special circle that you remember.";
-			} else {
-				displayString = displayString + "You will lose " + + IOtask2BlockContext.maxPoints() 
-				+ " points for every special circle that you forget.";
-			}
-			
-			displayString = displayString + "<br><br>Please click the button below to start.";
+			displayString = displayString + "This time you <b>must</b> set a reminder for every special circle.<br><br>"
+					+ "Please touch the button below to start.";
 		} else {
-			displayString = displayString + "This time you must make a decision.<br><br>";
-					
-			if (IOtask2BlockContext.getRewardFrame() == Names.GAIN_FRAME) {
-				displayString = displayString + "If you forget a special circle, you will not score any points.";
-			} else {
-				displayString = displayString + "If you forget a special circle, you will lose " 
-			    + IOtask2BlockContext.maxPoints() + " points.";
-			}
-			
-			displayString = displayString + "<br><br>You have a choice for what happens when you remember. "
-					+ "Please click the option that you prefer.";
+			displayString = displayString
+					+ "This time you have a choice.<br><br>Please select the option that you prefer.<br><br>";
 		}
 
 		displayText.setHTML(displayString);
 
-		//reminder button
-		if (IOtask2BlockContext.getRewardFrame() == Names.GAIN_FRAME) {
-			displayString = "Gain " + points + " points<br>each time you remember<br><br>"
-					        + "Reminders allowed";		
-		} else {
-			displayString = "Lose " + (IOtask2BlockContext.maxPoints() - points)
-					        + " points<br>each time you remember<br><br>Reminders allowed";
-		}
-		
-		if (points == IOtask2BlockContext.maxPoints()) {
-			displayString = "You <b>must</b> set reminders";
-		}
-		
-		final Button reminderButton = new Button(displayString);
+		final Button reminderButton = new Button(
+				"Special circles worth<br><b>" + points + " </b>points<br><br>" + "Reminders allowed");
 
-		//no-reminder button
-		if (IOtask2BlockContext.getRewardFrame() == Names.GAIN_FRAME) {
-			displayString = "Gain " + IOtask2BlockContext.maxPoints()
-					        + " points<br>each time you remember<br><br>"
-					        + "Reminders not allowed";		
-		} else {
-			displayString = "Lose 0 points<br>each time you remember<br><br>Reminders not allowed";
+		if (points == IOtask2BlockContext.maxPoints()) {
+			reminderButton.setHTML(
+					"Special circles worth<br><b>" + points + " </b>points<br><br>" + "You <b>must</b> set reminders");
 		}
-		
-		if (points == 0) {
-			displayString = "Reminders <b>not</b> allowed";
-		}
-		
-		final Button noReminderButton = new Button(displayString);
+
+		final Button noReminderButton = new Button(
+				"Special circles worth<br><b>" + IOtask2BlockContext.maxPoints() + " </b>points<br><br>" + "Reminders <b>not</b> allowed");
 
 		if (Counterbalance.getFactorLevel("buttonColours") == 0) {
 			reminderButton.setStyleName("pinkButton");

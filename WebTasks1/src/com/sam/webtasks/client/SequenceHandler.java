@@ -18,17 +18,13 @@
 //SequenceHandler.SetLoop(0,false) will switch to the main loop,
 //continuing from where we left off.
 
-//TODO:
-//scroll
-//data output
-//resume where you left off
-
 package com.sam.webtasks.client;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.sam.webtasks.basictools.CheckIdExists;
 import com.sam.webtasks.basictools.CheckScreenSize;
@@ -44,13 +40,12 @@ import com.sam.webtasks.basictools.Slider;
 import com.sam.webtasks.basictools.TimeStamp;
 import com.sam.webtasks.iotask1.IOtask1Block;
 import com.sam.webtasks.iotask1.IOtask1BlockContext;
+import com.sam.webtasks.iotask1.IOtask1DisplayParams;
 import com.sam.webtasks.iotask1.IOtask1InitialiseTrial;
 import com.sam.webtasks.iotask1.IOtask1RunTrial;
 import com.sam.webtasks.iotask2.IOtask2Block;
 import com.sam.webtasks.iotask2.IOtask2BlockContext;
 import com.sam.webtasks.iotask2.IOtask2RunTrial;
-import com.sam.webtasks.perceptualTask.PerceptBlock;
-import com.sam.webtasks.timeBasedOffloading.TimeBlock;
 import com.sam.webtasks.iotask2.IOtask2InitialiseTrial;
 import com.sam.webtasks.iotask2.IOtask2PreTrial;
 
@@ -69,7 +64,123 @@ public class SequenceHandler {
 				ClickPage.Run(Instructions.Get(0), "Next");
 				break;
 			case 2:
-				Finish.Run();
+				IOtask2Block block0 = new IOtask2Block();
+				block0.totalCircles = 8;
+				block0.blockNum = 0;
+				block0.nTargets = 0;
+				block0.showPoints = false;
+				block0.showPostTrialFeedback=false;
+				block0.Run();
+				break;
+			case 3:
+				ClickPage.Run(Instructions.Get(1),  "Next");
+				break;
+			case 4:
+				IOtask2Block block1 = new IOtask2Block();
+				block1.totalCircles = 8;
+				block1.blockNum = 1;
+				block1.nTargets = 1;
+				block1.showPoints = false;
+				block1.showPostTrialFeedback=false;
+				block1.Run();
+				break;
+			case 5:
+				if (IOtask2BlockContext.getnHits() == 0) { 
+					SequenceHandler.SetPosition(SequenceHandler.GetPosition()-2); //this line means that instead of moving forward we will repeat the previous instructions
+					ClickPage.Run("You did not drag the special circle to the instructed side of the square.", "Try again");
+				} else {
+					SequenceHandler.Next(); //move to the next instruction
+				}
+				break;
+			case 6:
+				ClickPage.Run(Instructions.Get(2), "Next");
+				break;
+			case 7:
+				IOtask2Block block2 = new IOtask2Block();
+				block2.totalCircles = 17;
+				block2.blockNum = 2;
+				block2.nTargets = 7;
+				block2.showPoints = false;
+				block2.showPostTrialFeedback=false;
+				block2.Run();
+				break;
+			case 8:
+				Slider.Run(Instructions.Get(12),  "None of them",  "All of them");
+				break;
+			case 9:
+				PHP.logData("slider1", ""+Slider.getSliderValue(), true);
+				break;
+			case 10:
+				ClickPage.Run(Instructions.Get(4), "Next");
+				break;
+			case 11:
+				IOtask2Block block3 = new IOtask2Block();
+				block3.totalCircles = 17;
+				block3.blockNum = 3;
+				block3.nTargets = 7;
+				block3.showPoints = false;
+				block3.showPostTrialFeedback=false;
+				block3.Run();
+				break;
+			case 12:
+				if (IOtask2BlockContext.getnHits() == 0) { 
+					SequenceHandler.SetPosition(SequenceHandler.GetPosition()-2); //this line means that instead of moving forward we will repeat the previous instructions
+					ClickPage.Run("You need to respond correctly to at least 5 of the special circles to continue.", "Try again");
+				} else {
+					SequenceHandler.Next(); //move to the next instruction
+				}
+				break;
+			case 13:
+				ClickPage.Run(Instructions.Get(5), "Next");
+				break;
+			case 14:
+				ClickPage.Run(Instructions.Get(6), "Next");
+				break;
+			case 15:
+				ClickPage.Run(Instructions.Get(7),  "Next");
+				break;
+			case 16:
+				ClickPage.Run(Instructions.Get(8),  "Next");
+				break;
+			case 17:
+				ClickPage.Run(Instructions.Get(9),  "Next");
+				break;
+			case 18:
+				//add progress bar to screen
+				ProgressBar.Initialise();
+				ProgressBar.Show();
+				ProgressBar.SetProgress(0,  14);
+				Params.progress=0;
+				
+				IOtask2Block block4 = new IOtask2Block();
+				block4.totalCircles = 17;
+				block4.blockNum = 4;
+				block4.nTargets = 7;
+				block4.showPoints = true;
+				block4.showPostTrialFeedback=false;
+				block4.ongoingStimType = Names.ONGOING_STIM_NUMBERS;
+				block4.standard13block = true;
+				block4.updateProgress = true;
+				
+				
+				block4.Run();
+				break;
+			case 19:
+				// log data and check that it saves
+				String data = TimeStamp.Now() + ",";
+				data = data + SessionInfo.participantID + ",";
+				data = data + Counterbalance.getFactorLevel("WhichReminderConditionFirst") + ",";
+				data = data + Counterbalance.getFactorLevel("WhichEffortConditionFirst") + ",";
+				data = data + SessionInfo.gender + ",";
+				data = data + SessionInfo.age;
+
+				PHP.UpdateStatus("finished");
+				PHP.logData("finish", data, true);
+				break;
+			case 20:
+				ProgressBar.Hide();
+				
+				ClickPage.Run(Instructions.Get(15), "nobutton");
 				break;
 			}
 			break;
@@ -97,39 +208,27 @@ public class SequenceHandler {
 				PHP.CheckStatus();
 				break;
 			case 4:
-				// check whether this participant ID has been used to access a previous experiment
-				PHP.CheckStatusPrevExp();
-				break;
-			case 5:
 				// clear screen, now that initial checks have been done
 				RootPanel.get().clear();
 
 				// make sure the browser window is big enough
 				CheckScreenSize.Run(SessionInfo.minScreenSize, SessionInfo.minScreenSize);
 				break;
-			case 6:
+			case 5:
 				if (SessionInfo.runInfoConsentPages) { 
 					InfoSheet.Run(Instructions.InfoText());
 				} else {
 					SequenceHandler.Next();
 				}
 				break;
-			case 7:
+			case 6:
 				if (SessionInfo.runInfoConsentPages) { 
 					Consent.Run();
 				} else {
 					SequenceHandler.Next();
 				}
 				break;
-			case 8:
-				//record the participant's counterbalancing condition in the status table				
-				if (!SessionInfo.resume) {
-					PHP.UpdateStatus("" + Counterbalance.getCounterbalancingCell() + ",1,0,0,0,0");
-				} else {
-					SequenceHandler.Next();
-				}
-				break;
-			case 9:
+			case 7:
 				SequenceHandler.SetLoop(0, true); // switch to and initialise the main loop
 				SequenceHandler.Next(); // start the loop
 				break;
@@ -165,6 +264,7 @@ public class SequenceHandler {
 				SequenceHandler.SetLoop(2, true);
 				SequenceHandler.Next();
 				break;
+				// TODO: mechanism to give post-trial feedback?
 			}
 			break;
 		case 3: //IOtask2 loop
@@ -187,30 +287,24 @@ public class SequenceHandler {
 			case 2:
 				IOtask2InitialiseTrial.Run();
 				break;
-			case 3:;
+			case 3:
 				//present the pre-trial choice if appropriate
 				if (IOtask2BlockContext.currentTargetValue() > -1) {
 					IOtask2PreTrial.Run();
 				} else { //otherwise just skip to the start of the block
-					if ((IOtask2BlockContext.getTrialNum() > 0)&&(IOtask2BlockContext.countdownTimer())) {
-						//if we're past the first trial and there's a timer, click to begin
-						ClickPage.Run("Ready?", "Continue");
-					} else {
-						SequenceHandler.Next();
-					}
+					SequenceHandler.Next();
 				}
 				break;
 			case 4:
-				if (IOtask2BlockContext.getNTrials() == -1) { //if nTrials has been set to -1, we quit before running
-					SequenceHandler.SetLoop(0,  false);
-					SequenceHandler.Next();
-				} else {
-					//otherwise, run the trial
-					IOtask2RunTrial.Run();
-				}
+				//now run the trial
+				IOtask2RunTrial.Run();
 				break;
 			case 5:
-				IOtask2PostTrial.Run();
+				if (IOtask2BlockContext.showPostTrialFeedback()) {
+					IOtask2Feedback.Run();
+				} else {
+					SequenceHandler.Next();
+				}
 				break;
 			case 6:
 				//we have reached the end, so we need to restart the loop
@@ -236,15 +330,15 @@ public class SequenceHandler {
 			sequencePosition.set(whichLoop, 0);
 		}
 	}
-	
-	// get current loop
-	public static int GetLoop() {
-		return (whichLoop);
-	}
 
 	// set a new position
 	public static void SetPosition(int newPosition) {
 		sequencePosition.set(whichLoop, newPosition);
+	}
+	
+	// get current loop
+	public static int GetLoop() {
+		return (whichLoop);
 	}
 
 	// get current position
@@ -252,8 +346,7 @@ public class SequenceHandler {
 		return (sequencePosition.get(whichLoop));
 	}
 	
-	// get current position from particular loop
-	public static int GetPosition(int nLoop) {
-		return (sequencePosition.get(nLoop));
+	public static int GetMainPosition() {
+		return (sequencePosition.get(0));
 	}
 }
