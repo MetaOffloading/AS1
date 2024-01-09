@@ -56,6 +56,10 @@ public class Initialise {
 			//SessionInfo.prolificExperimentCode = Window.Location.getParameter("STUDY_ID");
 			SessionInfo.participantID = Window.Location.getParameter("PROLIFIC_PID");
 			
+			if (SessionInfo.localTesting) {
+				SessionInfo.participantID=" ";
+			}
+			
 			if (SessionInfo.participantID == null) {
 				SessionInfo.participantID = Window.prompt("What is your Prolific ID?",  "");
 			}

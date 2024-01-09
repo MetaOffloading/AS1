@@ -176,7 +176,7 @@ public class SequenceHandler {
 			case 19:
 				ProgressBar.Initialise();
 				ProgressBar.Show();
-				ProgressBar.SetProgress(0, 16);
+				ProgressBar.SetProgress(0, 44);
 				
 				IOtask2Block block7 = new IOtask2Block();
 				
@@ -192,6 +192,93 @@ public class SequenceHandler {
 				block7.Run();
 				break;
 			case 20:
+				ClickPage.Run(Instructions.Get(9), "Next");
+				break;
+			case 21:	
+				Q_Sara1.Run();
+				break;
+			case 22:
+				Q_Sara2.Run();
+				break;
+			case 23:
+				Q_Sara3.Run();
+				break;
+			case 24:
+				Q_VVIQ1.Run();
+				break;
+			case 25:
+				Q_VVIQ2.Run();
+				break;
+			case 26:
+				Q_VVIQ3.Run();
+				break;
+			case 27:
+				Q_VVIQ4.Run();
+				break;
+			case 28:
+				Q_VVIQ5.Run();
+				break;
+			case 29:
+				Q_VVIQ6.Run();
+				break;
+			case 30:
+				Q_VVIQ7.Run();
+				break;
+			case 31:
+				Q_VVIQ8.Run();
+				break;
+			case 32:
+				Q_VVIQ9.Run();
+				break;
+			case 33:
+				Q_VVIQ10.Run();
+				break;
+			case 34:
+				Q_VVIQ11.Run();
+				break;
+			case 35:
+				Q_VVIQ12.Run();
+				break;
+			case 36:
+				Q_VVIQ13.Run();
+				break;
+			case 37:
+				Q_VVIQ14.Run();
+				break;
+			case 38:
+				Q_VVIQ15.Run();
+				break;
+			case 39:
+				Q_VVIQ16.Run();
+				break;
+			case 40:
+				Q_SUIS.Run();
+				break;
+			case 41:
+				Q_Yuewei1.Run();
+				break;
+			case 42:
+				Q_SES1.Run();
+				break;
+			case 43:
+				Q_SES2.Run();
+				break;
+			case 44:
+				Q_SES3.Run();
+				break;
+			case 45:
+				Q_SES4.Run();
+				break;
+			case 46:
+				Q_SES5.Run();
+				break;
+			case 47:
+				Q_SES6.Run();
+				break;
+			case 48:
+				Q_SES7.Run();
+				break;
+			case 49:
 				ProgressBar.Hide();
 				
 				// log data and check that it saves
@@ -204,7 +291,7 @@ public class SequenceHandler {
 				PHP.UpdateStatus("finished");
 				PHP.logData("finish", data, true);
 				break;
-			case 21:
+			case 50:
 				ClickPage.Run(Instructions.Get(10), "nobutton");
 				break;
 			}

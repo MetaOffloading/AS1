@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.sam.webtasks.basictools.PHP;
+import com.sam.webtasks.basictools.ProgressBar;
 
 public class RunQuestionnaire {
 	public static void main(final Questionnaire q) {
@@ -181,6 +182,8 @@ public class RunQuestionnaire {
                             }
                         }
                     } else {
+                    	ProgressBar.Increment();
+                    	
                         RootPanel.get().remove(centeringPanel);
                         
                         //output data
